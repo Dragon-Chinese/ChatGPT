@@ -1,0 +1,151 @@
+.wrapper {
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
+    .box {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        header {
+            height: 42px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom: 1px solid #ccc;
+            .van-nav-bar {
+                background: linear-gradient(180deg, #363636 100%, #E4C493 100%);
+                p{
+                    color: #fff;
+                }
+            }
+            img {
+                height: 25px;
+            }
+        }
+        main {
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+            overflow-y: auto;
+            background: #eee;
+            ul {
+                height: auto;
+                width: 100%;
+                padding: 0px 15px;
+                box-sizing: border-box;
+                li {
+                    width: 100%;
+                    font-size: 14px;
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: flex-start;
+                    .wrap {
+                        max-width: 90%;
+                        display: flex;
+                        flex-direction: column;
+                        .mark {
+                            background: #fff;
+                            padding: 10px;
+                            border-radius: 6px;
+                            .think {
+                                img {
+                                    width: 15px;
+                                    margin-top: -2px;
+                                    margin-left: 10px;
+                                    animation: rotate .5s linear infinite;
+                                }
+                            }
+                            * {
+                                line-height: 20px;
+                            }
+                            pre {
+                                margin: 10px 0;
+                                padding: 10px;
+                            }
+                        }
+                        @keyframes rotate {
+                            from {
+                              transform: rotate(0deg);
+                            }
+                            to {
+                              transform: rotate(360deg);
+                            }
+                          }
+                        .info {
+                            display: flex;
+                            span{
+                                font-size: 12px;
+                                margin-top: 2px;
+                            }
+                            .pix {
+                                width: 30px;
+                                height: 30px;
+                                // border: 1px solid #ccc;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                img {
+                                    height: 100%;
+                                    width: 100%;
+                                }
+                                i {
+                                    font-size: 18px;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                }
+                li.assistant {
+                    .mark {
+                        margin-left: 38px;
+                        margin-top: -12px;
+                    }
+                    .info {
+                        span {
+                            margin-left: 8px;
+                        }
+                    }
+                }
+                li.user {
+                    justify-content: flex-end;
+                    .info {
+                        justify-content: flex-end;
+                        span {
+                            margin-right: 8px;
+                        }
+                    }
+                    .mark {
+                        // justify-content: flex-end !important;
+                        margin-right: 38px;
+                        margin-top: -12px;
+                    }
+                }
+                li:last-child{
+                    padding-bottom: 50px;
+                }
+            }
+        }
+        footer {
+            height: 60px;
+            border-top: 1px solid #f3f3f3;
+            .van-search {
+                .van-search__action {
+                    width: 60px;
+                    i {
+                        font-size: 25px;
+                        margin-top: 10px;
+                    }
+                    >div {
+                        display: flex;
+                        align-items: center;
+                        button {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
