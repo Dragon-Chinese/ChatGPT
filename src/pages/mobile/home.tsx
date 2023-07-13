@@ -2,7 +2,7 @@ import { getCurrentInstance, defineComponent, reactive, onMounted } from "vue";
 import { computed, ref, watch } from "vue-demi";
 import { ElMessage } from 'element-plus'
 import Markdown from 'vue3-markdown-it';
-import { useMixin } from '@/hooks/useMixin'
+// import { useMixin } from '@/hooks/useMixin'
 import '@/assets/h5.scss'
 import chartGPTIcon from '@/assets/icon/ie-ChatGPT.svg'
 import UserIcon from '@/assets/icon/user.svg'
@@ -17,7 +17,6 @@ const Main = defineComponent({
   },
   setup(props) {
     // 008AFF
-    const { EnterSend, message, loading } = useMixin()
     const store = useStore()
     const txt = ref('')
     const childRef = ref(null)

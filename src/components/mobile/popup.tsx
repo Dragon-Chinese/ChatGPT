@@ -1,19 +1,17 @@
 import { getCurrentInstance, defineComponent, reactive, onMounted } from "vue";
 import { computed, ref, watch } from "vue-demi";
 import { ElMessage } from 'element-plus'
-import { useMixin } from '@/hooks/useMixin'
+// import { useMixin } from '@/hooks/useMixin'
 import { useStore } from '@/store/index'
 import '@/assets/popup.scss'
 const Popup = defineComponent({
   props: {
   },
   setup(props, context) {
-    const { allData, defaultId, CreateMessage, TabId } = useMixin()
     const store = useStore()
     const show = ref(false)
     const tabStatus = () => {
       show.value = !show.value
-      console.log(allData)
     }
     const activeChat = (val: number) => {
       store.ActiveChat(val)
