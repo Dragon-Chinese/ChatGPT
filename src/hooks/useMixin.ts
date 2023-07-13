@@ -55,8 +55,8 @@ export const useMixin = () => {
         //     session.data[id.value].message[session.data[id.value].message.length - 1].content = ansolo.value
         //     loading.value = false
         // }, 2000)
-        sendMsg({message: txt}).then(res => {
-            session.data[id.value].message[session.data[id.value].message.length - 1].content = res.message
+        sendMsg({message: txt, id: 7}).then(res => {
+            session.data[id.value].message[session.data[id.value].message.length - 1].content = res.message.content
             loading.value = false
         })
         console.log(message1.data)

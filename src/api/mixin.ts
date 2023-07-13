@@ -10,11 +10,20 @@ export function sendMsg<T>(data: T): any {
     })
 }
 
-// 获取系统
-// export function getclientaccountnumberlist(params: any): Object {
-//     return request({
-//         url: '/thirdpartysystem/getclientaccountnumberlist',
-//         method: 'get',
-//         params
-//     })
-// }
+// 获取会话列表
+export function getChats(params: any): Object {
+    return request({
+        url: 'https://120.27.245.86/api/v1/ai/chats',
+        method: 'get',
+        params
+    })
+}
+
+// 获取消息
+export function getChat(params: any): Object {
+    return request({
+        url: 'https://120.27.245.86/api/v1/ai/chat',
+        method: 'get',
+        params
+    })
+}

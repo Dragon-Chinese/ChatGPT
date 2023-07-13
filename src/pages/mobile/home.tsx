@@ -19,12 +19,11 @@ const Main = defineComponent({
     // 008AFF
     const { EnterSend, message, loading } = useMixin()
     const store = useStore()
-    console.log(message)
     const txt = ref('')
     const childRef = ref(null)
     // 发送消息
     const onSend = () => {
-      EnterSend(txt.value)
+      store.SenMsg(txt.value)
       txt.value = ''
       setTimeout(() => {
         scrollBottoom()
@@ -43,11 +42,11 @@ const Main = defineComponent({
       childRef.value.tabStatus()
     }
 
-    watch(() => message.data, (n) => {
+    watch(() => store.message, (n) => {
       nextTick(() => {
-        message.data.length && scrollBottoom()
+        store.message.messages.length && scrollBottoom()
       })
-    }, { deep: true })
+    }, { deep: true, immediate:true })
 
     onMounted(() => {
     })
@@ -68,10 +67,7 @@ const Main = defineComponent({
           </header>
           <main id="main">
             <ul>
-              {
-                console.log(message.data)
-              }
-              {message.data.map((val, index) => {
+              {store.message && store.message.messages.map((val, index) => {
                 return val.role === 'user' ? <li key={index} class={val.role}>
                   <div class="wrap">
                     <div class={'info'}>
@@ -90,7 +86,7 @@ const Main = defineComponent({
                         <span>小助手</span>
                       </div>
                       <div class='mark'>
-                        {index+1 === message.data.length ? (!loading.value ? <Markdown source={val.content} /> : <span class={'think'}>努力思考中... <img src={Loading} alt="" /></span>) : <Markdown source={val.content} /> }
+                        {index+1 === store.message.messages.length ? (!store.loading ? <Markdown source={val.content} /> : <span class={'think'}>努力思考中... <img src={Loading} alt="" /></span>) : <Markdown source={val.content} /> }
                       </div>
                     </div>
                   </li>
@@ -104,7 +100,7 @@ const Main = defineComponent({
               placeholder="您的问题..."
               onSearch="onSearch"
               v-slots={{
-                action: <div onClick={() => { onSend() }}><van-button disabled={loading.value} type="primary" size="small">{!loading.value ? '发送' : '思考中'}</van-button></div>
+                action: <div onClick={() => { onSend() }}><van-button disabled={store.loading} type="primary" size="small">{!store.loading ? '发送' : '思考中'}</van-button></div>
               }}
             >
             </van-search>
