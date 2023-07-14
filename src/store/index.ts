@@ -1,6 +1,6 @@
 
 import { defineStore } from 'pinia' //引入pinia
-import { getChats, getChat, sendMsg } from '@/api/mixin'
+import { getChats, getChat, sendMsg, delChat } from '@/api/mixin'
 //这里官网是单独导出  是可以写成默认导出的  官方的解释为大家一起约定仓库用use打头的单词 固定统一小仓库的名字不易混乱
 export const useStore = defineStore("data", {
   state: () => {
@@ -9,8 +9,9 @@ export const useStore = defineStore("data", {
       tabId: null,
       session: [],
       message: null,
-      navList: null,
-      loading: false
+      navList: [],
+      loading: false,
+      updateTime: ''
     }) //为了避免出错，返回的值用()包起来
   },
   actions: {
@@ -28,14 +29,17 @@ export const useStore = defineStore("data", {
     },
     // 获取消息列表
     GetChats () {
-      getChats({until: +new Date()}).then(res => {
-        console.log(res)
-        this.navList = res.chats
-        if(!res.chats.length) {
+      getChats({until: this.updateTime || +new Date()}).then(res => {
+        res.chats && (this.navList = [...this.navList, ...res.chats])
+        if(!res.chats) {
+          console.log('123')
           return this.CreateMessage()
+        }else {
+          this.updateTime = this.navList[this.navList.length -1].update_time
         }
         if(!this.tabId) {
           this.tabId = this.navList[0].id
+          this.updateTime = this.navList[this.navList.length -1].update_time
           this.GetChat()
         }
       })
@@ -70,6 +74,15 @@ export const useStore = defineStore("data", {
       this.message.messages.push({
         role: 'assistant',
         content: '您好，我是AI，有什么可以帮助您的'
+      })
+    },
+    // 删除会话
+    DeleteItem (id: any) {
+      delChat({id}).then(res => {
+        this.navList = []
+        this.updateTime  = ''
+        this.tabId = null
+        this.GetChats()
       })
     }
   }

@@ -43,7 +43,7 @@ const Main = defineComponent({
 
     watch(() => store.message, (n) => {
       nextTick(() => {
-        store.message.messages.length && scrollBottoom()
+        store.message && store.message.messages.length && scrollBottoom()
       })
     }, { deep: true, immediate:true })
 

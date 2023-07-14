@@ -1,6 +1,7 @@
 import { getCurrentInstance, defineComponent, reactive, onMounted } from "vue";
 import { computed, ref, watch } from "vue-demi";
 import { ElMessage } from 'element-plus'
+import del from '@/assets/icon/del.svg'
 // import { useMixin } from '@/hooks/useMixin'
 import { useStore } from '@/store/index'
 import '@/assets/popup.scss'
@@ -14,12 +15,19 @@ const Popup = defineComponent({
       show.value = !show.value
     }
     const activeChat = (val: number) => {
+      if(store.tabId == val) return;
       store.ActiveChat(val)
       tabStatus()
     }
     const newChat = () => {
       store.CreateMessage()
       tabStatus()
+    }
+    const getMore = () => {
+      store.GetChats()
+    }
+    const deleteItem = (id: any) => {
+      store.DeleteItem(id)
     }
     context.expose({tabStatus})
 
@@ -32,13 +40,14 @@ const Popup = defineComponent({
             <div class={'data-view'}>
               <ul>
                 {
-                  store.navList && store.navList.map((val, index) => {
+                  store.navList.length ? store.navList.map((val, index) => {
                     return <li key={index} class={val.id*1 === store.tabId*1 && 'active'} onClick={() => {activeChat(val.id)}}>
-                      {val.abstract || 'New Chat'}
-                    </li>
-                  })
+                      {val.abstract || 'New Chat'} {val.id*1 === store.tabId*1 && <img onClick={() => {deleteItem(val.id)}} src={del} alt="" />}
+                    </li> 
+                  }) : null
                 }
               </ul>
+              <span class={'more'} onClick={() => {getMore()}}>加载更多...</span>
             </div>
             <div class={'data-bottom'}>
               <p class={'tips'}>登录后可自动同步设备聊天记录</p>

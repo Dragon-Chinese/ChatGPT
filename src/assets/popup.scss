@@ -14,6 +14,10 @@
     }
     .data-view {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        overflow-y: auto;
         ul {
             li {
                 margin-bottom: 12px;
@@ -22,10 +26,23 @@
                 padding: 16px 12px;
                 border-radius: 5px;
                 margin: 0 10px;
+                position: relative;
+                img {
+                    height: 15px;
+                    position: absolute;
+                    right: 12px;
+                }
             }
             li.active {
                 background: #262626;
             }
+        }
+        .more {
+            display: block;
+            text-align: center;
+            margin: 10px 0 20px 0;
+            color: #77808f;
+            font-size: 12px;
         }
     }
     .data-bottom {

@@ -27,3 +27,12 @@ export function getChat(params: any): Object {
         params
     })
 }
+
+// 删除消息
+export function delChat(params: any): Object {
+    return request({
+        url: 'https://120.27.245.86/api/v1/ai/chat',
+        method: 'delete',
+        params
+    })
+}
