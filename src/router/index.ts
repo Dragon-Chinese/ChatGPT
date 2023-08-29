@@ -1,5 +1,5 @@
 //文件router/index.js
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 //CMS
 // const Cms = () => import('@/pages/home/home.vue')
 
@@ -10,10 +10,10 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/mp/home'
   },
   {
-    path: '/home',
+    path: '/mp/home',
     name: 'home',
     component:  () => import ('@/pages/mobile/home'),
     meta: { title: '首页', key: '/cms/home' }
@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
  */
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 });
 

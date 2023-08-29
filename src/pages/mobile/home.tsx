@@ -9,9 +9,13 @@ import UserIcon from '@/assets/icon/user.svg'
 import Ask from '@/assets/icon/chatgpt_Ask_one.svg'
 import Set from '@/assets/icon/set.svg'
 import Loading from '@/assets/icon/loading.svg'
+import Copy from '@/assets/icon/copy.svg'
 import Popup from '@/components/mobile/popup'
 import { useStore } from '@/store/index.ts'
 import { nextTick } from "process";
+import Drag from '@/components/Drag.vue'
+import clipboard3 from 'vue-clipboard3'
+import { Toast } from 'vant';
 const Main = defineComponent({
   props: {
   },
@@ -20,6 +24,8 @@ const Main = defineComponent({
     const store = useStore()
     const txt = ref('')
     const childRef = ref(null)
+    // 解构方法
+    const { toClipboard } = clipboard3()
     // 发送消息
     const onSend = () => {
       store.SenMsg(txt.value)
@@ -50,19 +56,39 @@ const Main = defineComponent({
     onMounted(() => {
     })
 
+    const copy = async (val: any) => {
+      try {
+        await toClipboard(val)
+        Toast({
+          message: '复制成功',
+          position: 'top',
+        });
+      } catch (err) {
+          Toast({
+            message: '复制失败',
+            position: 'top',
+          });
+      }
+    }
+
+    const algin = () => {
+      // 发送消息
+      store.SenMsgAlgin()
+    }
+
     return () => (
       <div class='wrapper'>
         <Popup ref={childRef} />
         <div class="box">
           <header>
-            <van-nav-bar left-text="返回" left-arrow
+            {/* <van-nav-bar
               v-slots={{
                 left: <img onClick={() => {}} src={Set} alt="" />,
                 title: <p>{store.title}</p>,
                 right: <img onClick={() => {PopupTab()}} src={Ask} alt="" />
               }}
             >
-            </van-nav-bar>
+            </van-nav-bar> */}
           </header>
           <main id="main">
             <ul>
@@ -82,10 +108,12 @@ const Main = defineComponent({
                     <div class="wrap">
                       <div class='info'>
                         <div class="pix"><img src={chartGPTIcon} alt="" /></div>
-                        <span>小助手</span>
+                        <span>AI Chat</span>
                       </div>
                       <div class='mark'>
                         {index+1 === store.message.messages.length ? (!store.loading ? <Markdown source={val.content} /> : <span class={'think'}>努力思考中... <img src={Loading} alt="" /></span>) : <Markdown source={val.content} /> }
+                        <van-divider />
+                        {!store.loading ? store.netErr ?  <img src={Loading} alt="" onClick={() => {algin}} />  : <img onClick={() => {copy(val.content)}} src={Copy} alt="" />  : '' }
                       </div>
                     </div>
                   </li>
@@ -103,10 +131,10 @@ const Main = defineComponent({
               }}
             >
             </van-search>
-
           </footer>
 
         </div>
+        <Drag onClick={() => {PopupTab()}}></Drag>
       </div>
     )
   },

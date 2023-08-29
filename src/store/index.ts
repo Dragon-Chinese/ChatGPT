@@ -5,13 +5,14 @@ import { getChats, getChat, sendMsg, delChat } from '@/api/mixin'
 export const useStore = defineStore("data", {
   state: () => {
     return ({
-      title: "AI 小助手",
+      title: "AI Chat",
       tabId: null,
       session: [],
       message: null,
       navList: [],
       loading: false,
-      updateTime: ''
+      updateTime: '',
+      netErr: false
     }) //为了避免出错，返回的值用()包起来
   },
   actions: {
@@ -56,6 +57,7 @@ export const useStore = defineStore("data", {
             content: ''
         })
         this.loading = true
+        this.netErr = false
         sendMsg({message: txt, id: this.tabId}).then(res => {
             this.message.messages[this.message.messages.length - 1].content = res.message.content
             this.loading = false
@@ -63,7 +65,14 @@ export const useStore = defineStore("data", {
               this.tabId = res.id
               this.GetChats()
             }
+        }).catch(err => {
+            this.message.messages[this.message.messages.length - 1].content = '发送失败，请稍后重试'
+            this.loading = false
+            this.netErr = false
         })
+    },
+    SenMsgAlgin () {
+
     },
     // 创建新会话
     CreateMessage () {
