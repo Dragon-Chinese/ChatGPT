@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
         const token = localStorage.getItem('token')
         if(href.includes("?code")) {
             const code = href.split('?code=')[1].split('&state')[0]
-            localStorage.setItem('token', 'qqqqqqqqqqqqqq')
+            localStorage.setItem('token', code)
             console.log(code)
             var _url = window.location.protocol + '//' + window.location.host + '/#/mp/home'
             window.history.pushState({},0, _url)
