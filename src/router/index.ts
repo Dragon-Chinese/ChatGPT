@@ -1,5 +1,5 @@
 //文件router/index.js
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 //CMS
 // const Cms = () => import('@/pages/home/home.vue')
 
@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
  */
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 });
 
