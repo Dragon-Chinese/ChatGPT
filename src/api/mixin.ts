@@ -36,3 +36,13 @@ export function delChat(params: any): Object {
         params
     })
 }
+
+// 发送消息
+export function getToken<T>(data: T): any {
+    return request({
+        // url: 'http://192.168.1.152:8080/api/v1/ai/chat',
+        url: 'https://jetbra.top/api/v1/wx/oauth',
+        method: 'post',
+        data
+    })
+}

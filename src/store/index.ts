@@ -23,24 +23,28 @@ export const useStore = defineStore("data", {
     },
     // 获取消息
     GetChat() {
-      getChat({ id : this.tabId }).then(res => {
+      getChat({ chat_id: this.tabId }).then(res => {
+        res.chat.messages.unshift({
+          role: 'assistant',
+          content: '您好，我是AI，有什么可以帮助您的'
+        });
         this.message = res.chat
         console.log(this.message)
       })
     },
     // 获取消息列表
     GetChats () {
-      getChats({until: this.updateTime || +new Date()}).then(res => {
+      getChats({until: this.updateTime || Math.floor(+new Date() / 1000)}).then(res => {
         res.chats && (this.navList = [...this.navList, ...res.chats])
         if(!res.chats) {
-          console.log('123')
           return this.CreateMessage()
         }else {
-          this.updateTime = this.navList[this.navList.length -1].update_time
+          this.updateTime = this.navList[this.navList.length -1].updated_at
+          console.log(this.navList)
         }
         if(!this.tabId) {
           this.tabId = this.navList[0].id
-          this.updateTime = this.navList[this.navList.length -1].update_time
+          this.updateTime = this.navList[this.navList.length -1].updated_at
           this.GetChat()
         }
       })
@@ -58,7 +62,7 @@ export const useStore = defineStore("data", {
         })
         this.loading = true
         this.netErr = false
-        sendMsg({message: txt, id: this.tabId}).then(res => {
+        sendMsg({message: txt, chat_id: this.tabId}).then(res => {
             this.message.messages[this.message.messages.length - 1].content = res.message.content
             this.loading = false
             if(!this.tabId) {
@@ -78,16 +82,15 @@ export const useStore = defineStore("data", {
     CreateMessage () {
       this.tabId = null
       this.message = {
-        messages: []
+        messages: [{
+          role: 'assistant',
+          content: '您好，我是AI，有什么可以帮助您的'
+        }]
       }
-      this.message.messages.push({
-        role: 'assistant',
-        content: '您好，我是AI，有什么可以帮助您的'
-      })
     },
     // 删除会话
     DeleteItem (id: any) {
-      delChat({id}).then(res => {
+      delChat({chat_id: id}).then(res => {
         this.navList = []
         this.updateTime  = ''
         this.tabId = null

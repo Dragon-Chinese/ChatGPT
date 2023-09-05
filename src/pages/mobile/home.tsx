@@ -24,6 +24,7 @@ const Main = defineComponent({
     const store = useStore()
     const txt = ref('')
     const childRef = ref(null)
+    const user = ref(null)
     // 解构方法
     const { toClipboard } = clipboard3()
     // 发送消息
@@ -54,6 +55,10 @@ const Main = defineComponent({
     }, { deep: true, immediate:true })
 
     onMounted(() => {
+      const local = localStorage.getItem('user')
+      const user = local && JSON.parse(local)
+      user.value = user || null
+      document.title = user ? 'Hello！' + user.username : 'AI Chat'
     })
 
     const copy = async (val: any) => {
@@ -112,8 +117,8 @@ const Main = defineComponent({
                       </div>
                       <div class='mark'>
                         {index+1 === store.message.messages.length ? (!store.loading ? <Markdown source={val.content} /> : <span class={'think'}>努力思考中... <img src={Loading} alt="" /></span>) : <Markdown source={val.content} /> }
-                        <van-divider />
-                        {!store.loading ? store.netErr ?  <img src={Loading} alt="" onClick={() => {algin}} />  : <img onClick={() => {copy(val.content)}} src={Copy} alt="" />  : '' }
+                        {!!index && <van-divider />}
+                        {!!index && !store.loading ? store.netErr ?  <img src={Loading} alt="" onClick={() => {algin}} />  : <img onClick={() => {copy(val.content)}} src={Copy} alt="" />  : '' }
                       </div>
                     </div>
                   </li>
@@ -134,7 +139,7 @@ const Main = defineComponent({
           </footer>
 
         </div>
-        <Drag onClick={() => {PopupTab()}}></Drag>
+        <Drag onClick={() => {PopupTab()}} avatar={user.avatar}></Drag>
       </div>
     )
   },

@@ -1,6 +1,7 @@
 import router from '@/router/index'
 import { useStore } from '@/store/index.ts'
-const authorize = () =>  {
+import { getToken } from '@/api/mixin'
+const authorize = () => {
     const baseUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10cede6667d6d736&';
     const redirectUrl = 'https://jetbra.top/'; // 假设这是你的回调URL
     const state = '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
@@ -21,19 +22,22 @@ router.beforeEach(async (to, from, next) => {
         // 获取到code情况下
         const href = window.location.href;
         const token = localStorage.getItem('token')
-        if(href.includes("?code")) {
+        if (href.includes("?code")) {
             const code = href.split('?code=')[1].split('&state')[0]
-            localStorage.setItem('token', code)
-            console.log(code)
-            var _url = window.location.protocol + '//' + window.location.host + '/#/mp/home'
-            window.history.pushState({},0, _url)
-            if(true) {
-                // 有token
+            // if(token) {
+            //     // 有token
+            //     store.GetChats()
+            //     return next()
+            // }else {
+            // 没有token或者过期的情况下
+            getToken({ code }).then(res => {
+                localStorage.setItem('token', res.token)
+                localStorage.setItem('user', JSON.stringify(res.user))
+                var _url = window.location.protocol + '//' + window.location.host + '/#/mp/home'
+                window.history.pushState({}, 0, _url)
                 store.GetChats()
-                return next()
-            }else {
-                // 没有token或者过期的情况下
-            }
+            })
+            // }
         }
         else if (token) {
             store.GetChats()
@@ -46,6 +50,6 @@ router.beforeEach(async (to, from, next) => {
             // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10cede6667d6d736&redirect_uri=https%3A%2F%2Fjetbra.top%2F%23%2Fmp%2Fhome/&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
         }
     }
-    store.GetChats()
+    // store.GetChats()
     next()
 })

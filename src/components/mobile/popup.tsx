@@ -50,7 +50,7 @@ const Popup = defineComponent({
               <span class={'more'} onClick={() => {getMore()}}>加载更多...</span>
             </div>
             <div class={'data-bottom'}>
-              <p class={'tips'}>登录后可自动同步设备聊天记录</p>
+              {/* <p class={'tips'}>登录后可自动同步设备聊天记录</p> */}
               {/* <div class={'clear-button'}>清空所有会话</div> */}
             </div>
           </div>

@@ -16,7 +16,7 @@
           </span>
           <Icon icon="icon-xuanzhong" :size="36" style="color: #fff" />
         </div> -->
-        <img src='@/assets/icon/Nav.svg' alt="" />
+        <img :src="avatar" alt="" />
         <!-- anniu -->
       </div>
     </div>
@@ -24,6 +24,7 @@
   
   <script lang="ts">
     import { defineComponent, onMounted, reactive, nextTick, ref, onBeforeMount } from 'vue';
+    import ava from '@/assets/icon/Nav.svg'
     interface dataOptionItem {
       clientWidth: null | number;
       clientHeight: null | number;
@@ -46,7 +47,7 @@
         },
         distanceBottom: {
           type: Number,
-          default: 70,
+          default: 300,
         },
         isScrollHidden: {
           type: Boolean,
@@ -55,7 +56,7 @@
         isCanDraggable: {
           type: Boolean,
           default: true,
-        },
+        }
       },
       emits: ['handlepaly'],
       setup(props, { emit }) {
@@ -68,10 +69,11 @@
           timer: null,
           currentTop: 0,
           mousedownX: 0,
-          mousedownY: 0,
+          mousedownY: 0
         });
         // const floatDrag = ref();
         const floatDragDom = ref();
+        const avatar = ref(null)
         data.clientWidth = document.documentElement.clientWidth;
         data.clientHeight = document.documentElement.clientHeight;
         onMounted(() => {
@@ -85,6 +87,10 @@
                 Number(data.clientHeight) - floatDragDom.value?.offsetHeight - props.distanceBottom;
               initDraggable();
             });
+            const local = localStorage.getItem('user')
+            const user = local && JSON.parse(local)
+            user.value = user ? user.avatar : null
+            avatar.value = user.value || ava
           // this.isScrollHidden && window.addEventListener('scroll', this.handleScroll);
           window.addEventListener('resize', handleResize);
         });
@@ -202,6 +208,7 @@
           checkDraggablePosition,
           mouseUp,
           mouseDown,
+          avatar
         };
       },
     });
@@ -226,15 +233,20 @@
       justify-content: center;
       user-select: none;
       .content {
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
         box-shadow: 0px 0px 5px 2px #1989fa;
         border-radius: 50%;
         position: relative;
-        padding: 0.5em;
+        // padding: 0.5em;
         display: flex;
         align-content: center;
         justify-content: center;
+        img {
+          height: 100%;
+          width: 100%;
+          border-radius: 1rem;
+        }
       }
       .close {
         width: 20px;

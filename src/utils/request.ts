@@ -5,13 +5,13 @@ import { ElMessage, ElLoading } from 'element-plus'
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API + '/api/v1', // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
-  timeout: 111115000 // request timeout
+  timeout: 111115000, // request timeout
 })
 // request interceptor
 service.interceptors.request.use(
   (config: any) => {
     console.log(config)
-    config.url == '/file/uploadFile' && (config.headers['Content-Type'] = 'multipart/form-data')
+    // config.url == '/file/uploadFile' && (config.headers['Content-Type'] = 'multipart/form-data')
     // do something before request is sent
 
     // config.headers['currUser'] = 'zhaojunjie'
@@ -21,9 +21,10 @@ service.interceptors.request.use(
     // config.headers['Access-Control-Allow-Origin'] = '*'
     // config.headers['Access-Control-Allow-Credentials'] = true
     config.headers['Content-Type'] = 'application/json'
+    config.headers['X-Requested-With'] =  'XMLHttpRequest'
     // config.headers['X-Requested-With'] = 'XMLHttpRequest'
     // SSO
-    // config.headers['Current-Url'] = window.location.href
+    config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     return config
   },
   error => {
@@ -65,13 +66,17 @@ service.interceptors.response.use(
     // }
   },
   error => {
-    error.response.status !== 403 && error.response.data.msg && ElMessage.error(error.response? (error.response.data.msg || error.response.statusText ) : '服务器断开连接，cancel')
-    if (error.response.headers.redirect === 'REDIRECT') {
-      window.location.href = error.response.headers.contentpath
-    } else {
-      // alert('error')
+    // error.response.status !== 403 && error.response.data.msg && ElMessage.error(error.response? (error.response.data.msg || error.response.statusText ) : '服务器断开连接，cancel')
+    // if (error.response.headers.redirect === 'REDIRECT') {
+    //   window.location.href = error.response.headers.contentpath
+    // } else {
+    //   // alert('error')
+    // }
+    console.log(error.response.status)
+    if(error.response.status === 403) {
+      localStorage.removeItem('token')
+      location.reload()
     }
-    console.log(error)
     return Promise.reject(error)
   }
 )
