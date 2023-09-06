@@ -24,7 +24,7 @@ service.interceptors.request.use(
     config.headers['X-Requested-With'] =  'XMLHttpRequest'
     // config.headers['X-Requested-With'] = 'XMLHttpRequest'
     // SSO
-    config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+    config.headers['Authorization'] = 'Bearer ' + sessionStorage.getItem('token')
     return config
   },
   error => {
@@ -74,7 +74,7 @@ service.interceptors.response.use(
     // }
     console.log(error.response.status)
     if(error.response.status === 403) {
-      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
       location.reload()
     }
     return Promise.reject(error)

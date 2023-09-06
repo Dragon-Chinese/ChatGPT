@@ -21,7 +21,7 @@ router.beforeEach(async (to, from, next) => {
     if (/micromessenger/.test(navigator.userAgent.toLowerCase())) {
         // 获取到code情况下
         const href = window.location.href;
-        const token = localStorage.getItem('token')
+        const token = sessionStorage.getItem('token')
         if (href.includes("?code")) {
             const code = href.split('?code=')[1].split('&state')[0]
             // if(token) {
@@ -31,8 +31,8 @@ router.beforeEach(async (to, from, next) => {
             // }else {
             // 没有token或者过期的情况下
             getToken({ code }).then(res => {
-                localStorage.setItem('token', res.token)
-                localStorage.setItem('user', JSON.stringify(res.user))
+                sessionStorage.setItem('token', res.token)
+                sessionStorage.setItem('user', JSON.stringify(res.user))
                 var _url = window.location.protocol + '//' + window.location.host + '/#/mp/home'
                 window.history.pushState({}, 0, _url)
                 store.GetChats()

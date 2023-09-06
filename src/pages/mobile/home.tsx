@@ -55,7 +55,7 @@ const Main = defineComponent({
     }, { deep: true, immediate:true })
 
     onMounted(() => {
-      const local = localStorage.getItem('user')
+      const local = sessionStorage.getItem('user')
       const user = local && JSON.parse(local)
       user.value = user || null
       document.title = user ? 'Hello！' + user.username : 'AI Chat'
@@ -139,7 +139,7 @@ const Main = defineComponent({
           </footer>
 
         </div>
-        <Drag onClick={() => {PopupTab()}} avatar={user.avatar}></Drag>
+        <Drag onClick={() => {PopupTab()}}></Drag>
       </div>
     )
   },

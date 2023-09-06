@@ -47,7 +47,7 @@ const Popup = defineComponent({
                   }) : null
                 }
               </ul>
-              <span class={'more'} onClick={() => {getMore()}}>加载更多....</span>
+              <span class={'more'} onClick={() => {getMore()}}>加载更多...</span>
             </div>
             <div class={'data-bottom'}>
               {/* <p class={'tips'}>登录后可自动同步设备聊天记录</p> */}
