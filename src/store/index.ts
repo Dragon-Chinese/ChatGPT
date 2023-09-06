@@ -34,7 +34,7 @@ export const useStore = defineStore("data", {
     },
     // 获取消息列表
     GetChats () {
-      getChats({until: this.updateTime || Math.floor(+new Date() / 1000)}).then(res => {
+      getChats({until: (this.updateTime && this.updateTime*1 - 1) || Math.floor(+new Date() / 1000) + 1000}).then(res => {
         res.chats && (this.navList = [...this.navList, ...res.chats])
         if(!this.navList.length) {
           return this.CreateMessage()
