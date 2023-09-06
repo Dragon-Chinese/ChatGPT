@@ -42,7 +42,7 @@ const Popup = defineComponent({
                 {
                   store.navList.length ? store.navList.map((val, index) => {
                     return <li key={index} class={val.id*1 === store.tabId*1 && 'active'} onClick={() => {activeChat(val.id)}}>
-                      {val.abstract || 'New Chat'} {val.id*1 === store.tabId*1 && <img onClick={() => {deleteItem(val.id)}} src={del} alt="" />}
+                      {val.title || 'New Chat'} {val.id*1 === store.tabId*1 && <img onClick={() => {deleteItem(val.id)}} src={del} alt="" />}
                     </li> 
                   }) : null
                 }

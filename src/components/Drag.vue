@@ -233,8 +233,8 @@
       justify-content: center;
       user-select: none;
       .content {
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
         box-shadow: 0px 0px 5px 2px #1989fa;
         border-radius: 50%;
         position: relative;

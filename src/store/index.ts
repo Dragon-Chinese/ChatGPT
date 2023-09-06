@@ -36,7 +36,7 @@ export const useStore = defineStore("data", {
     GetChats () {
       getChats({until: this.updateTime || Math.floor(+new Date() / 1000)}).then(res => {
         res.chats && (this.navList = [...this.navList, ...res.chats])
-        if(!res.chats) {
+        if(!this.navList.length) {
           return this.CreateMessage()
         }else {
           this.updateTime = this.navList[this.navList.length -1].updated_at
@@ -45,7 +45,7 @@ export const useStore = defineStore("data", {
         if(!this.tabId) {
           this.tabId = this.navList[0].id
           this.updateTime = this.navList[this.navList.length -1].updated_at
-          this.GetChat()
+          this.GetChat(true)
         }
       })
     },
@@ -66,7 +66,7 @@ export const useStore = defineStore("data", {
             this.message.messages[this.message.messages.length - 1].content = res.message.content
             this.loading = false
             if(!this.tabId) {
-              this.tabId = res.id
+              this.tabId = res.chat_id
               this.GetChats()
             }
         }).catch(err => {
