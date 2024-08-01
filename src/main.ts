@@ -17,6 +17,10 @@ import '@/utils/rem'
 import mitt from 'mitt'
 import { createPinia } from 'pinia' //引入pinia
 import 'highlight.js/styles/monokai.css'
+// import VConsole from 'vconsole'
+// import eruda from 'eruda'
+// const vConsole = new VConsole()
+// eruda.init()
 
 const app = createApp(App)
 app.config.globalProperties.$mitt = mitt()
@@ -32,6 +36,7 @@ app.config.globalProperties.$func = func
 app.use(createPinia())
 app.use(Vant)
 app.use(ElTableNext)
+// app.use(vConsole)
 // 设置i18n
 // setI18n(app)
 app.use(router)

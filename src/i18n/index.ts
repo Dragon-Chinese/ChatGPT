@@ -18,7 +18,7 @@ if (lan.toLowerCase().indexOf('zh') !== -1) {
   EleLocale = enLocale
 }
 
-sessionStorage.setItem('lang', locale)
+localStorage.setItem('lang', locale)
 
 const i18n = createI18n({
   locale, 

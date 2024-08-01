@@ -1,147 +1,209 @@
-import { getCurrentInstance, defineComponent, reactive, onMounted } from "vue";
-import { computed, ref, watch } from "vue-demi";
-import { ElMessage } from 'element-plus'
-import Markdown from 'vue3-markdown-it';
-// import { useMixin } from '@/hooks/useMixin'
+import { getCurrentInstance, defineComponent, reactive, onMounted, ref } from "vue";
 import '@/assets/h5.scss'
-import chartGPTIcon from '@/assets/icon/ie-ChatGPT.svg'
-import UserIcon from '@/assets/icon/user.svg'
-import Ask from '@/assets/icon/chatgpt_Ask_one.svg'
-import Set from '@/assets/icon/set.svg'
-import Loading from '@/assets/icon/loading.svg'
-import Copy from '@/assets/icon/copy.svg'
+import { Tab, Tabs } from 'vant';
+import { Collapse, CollapseItem } from 'vant';
+import pen from '@/assets/icon/pen.gif'
+import { useRouter, useRoute } from 'vue-router';
 import Popup from '@/components/mobile/popup'
+import his from '@/assets/icon/jl.svg'
+import share from '@/assets/icon/share.svg'
 import { useStore } from '@/store/index.ts'
-import { nextTick } from "process";
-import Drag from '@/components/Drag.vue'
-import clipboard3 from 'vue-clipboard3'
 import { Toast } from 'vant';
-const Main = defineComponent({
-  props: {
-  },
-  setup(props) {
-    // 008AFF
-    const store = useStore()
-    const txt = ref('')
-    const childRef = ref(null)
-    const user = ref(null)
-    // 解构方法
-    const { toClipboard } = clipboard3()
-    // 发送消息
-    const onSend = () => {
-      store.SenMsg(txt.value)
-      txt.value = ''
-      setTimeout(() => {
-        scrollBottoom()
-      }, 100)
-    }
+const Home = defineComponent({
+    props: {
+    },
+    setup(props) {
+        const Router = useRouter()
+        const childRef = ref(null)
+        const store = useStore()
+        const feed = ref('')
+        const list = reactive({
+            data: [
+                {
+                    title: 'AI创作',
+                    child: [
+                        {
+                            title: '帮我写一篇写一篇生活vlog脚本 →'
+                        },
+                        {
+                            title: '帮我写一篇跑步文案，重点提炼自律和健康 →'
+                        },
+                        {
+                            title: '帮我写一个高中语文现代文教学策略1000字作文 →'
+                        }
+                    ]
+                },
+                {
+                    title: '智能编程',
+                    child: [
+                        {
+                            title: '请帮我写一段测试cudaMalloc接口的代码 →'
+                        },
+                        {
+                            title: '如何用Javascript发出HTTP请求?'
+                        },
+                        {
+                            title: '如何学习编程、如何学习新的语言 '
+                        }
+                    ]
+                },
+                {
+                    title: '工作生活助手',
+                    child: [
+                        {
+                            title: '我是电商运营，请帮我写一份周报 →'
+                        },
+                        {
+                            title: '如何激发创造力？”、“如何写一篇好的演讲稿？→'
+                        },
+                        {
+                            title: '请简短介绍一下无限极企业 →'
+                        }
+                    ]
+                }
+            ]
+        })
 
-    //计算滚到底部
-    const scrollBottoom = () => {
-      let a = document.querySelectorAll('#main ul>li')
-      let b = a[a.length - 1]
-      b && (document.querySelector('#main').scrollTop = b.offsetTop + b.offsetHeight)
-    }
+        const sendFeedback = () => {
+            if(feed.value.length <= 5) {
+                return  Toast({
+                    message: '不能少于5个字哦！',
+                    position: 'top',
+                  });
+            }
+            store.SendFeedback(feed.value)
+            feed.value = ''
+        }
 
-    // 打开侧边选项
-    const PopupTab = () => {
-      childRef.value.tabStatus()
-    }
+        const activeName = ref(0)
 
-    watch(() => store.message, (n) => {
-      nextTick(() => {
-        store.message && store.message.messages.length && scrollBottoom()
-      })
-    }, { deep: true, immediate:true })
+        const info = (msg: any) => {
+            sessionStorage.setItem('msg', msg)
+            Router.push({
+                path: '/message',
+            })
+        }
 
-    onMounted(() => {
-      const local = sessionStorage.getItem('user')
-      const user = local && JSON.parse(local)
-      user.value = user || null
-      document.title = user ? 'Hello！' + user.username : 'AI Chat'
-    })
+        const handleEnter = (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                // 在这里执行你想要的操作
+                info(txt.value)
+            }
+        };
 
-    const copy = async (val: any) => {
-      try {
-        await toClipboard(val)
-        Toast({
-          message: '复制成功',
-          position: 'top',
-        });
-      } catch (err) {
-          Toast({
-            message: '复制失败',
-            position: 'top',
-          });
+        const txt = ref('')
+        const type = ref(1)
+        const local = ref(null)
+        // 打开侧边选项
+        const PopupTab = () => {
+            childRef.value.tabStatus()
+        }
+
+        onMounted(() => {
+            getCamera()
+            store.GetProfile()
+            local.value = JSON.parse(localStorage.getItem('user'));
+            console.log(local.value)
+            setTimeout(() => {
+                store.GetWx()
+            }, 0)
+        })
+
+        const onClickTab = (e) => {
+            if(e.name !== type.value) {
+                console.log(e)
+                store.GetProfile()
+                type.value = e.name
+            }
+        }
+
+         // 调用打开摄像头功能
+    const getCamera = () => {
+        const media = navigator.mediaDevices;
+        console.log(media)
       }
-    }
 
-    const algin = () => {
-      // 发送消息
-      store.SenMsgAlgin()
-    }
+        return () => (
+            <div class='home'>
+                <Popup ref={childRef} />
+                <div class="wrap">
+                    {type.value == 1 && <header>
+                        <span>剩余消息次数：<span>{store.chatTimes.chat_times}</span></span>
+                        <img src={his} onClick={() => { PopupTab() }} alt="" />
+                    </header>}
+                    {type.value == 1 ?<main>
+                        <div class="one">
+                        <img src="https://img1.baidu.com/it/u=2917569892,3712639231&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" alt="" />
+                        <h4> 国内中文版,全新Ai模型 </h4>
+                        <van-collapse vModel={activeName.value} accordion>
+                            {
+                                list.data.map((item, ind) => {
+                                    return <van-collapse-item title={item.title} name={ind}>
+                                        {
+                                            item.child.map(val => {
+                                                return <p onClick={() => { info(val.title) }}>
+                                                    {
+                                                        val.title
+                                                    }
+                                                </p>
+                                            })
+                                        }
+                                    </van-collapse-item>
+                                })
+                            }
 
-    return () => (
-      <div class='wrapper'>
-        <Popup ref={childRef} />
-        <div class="box">
-          <header>
-            {/* <van-nav-bar
-              v-slots={{
-                left: <img onClick={() => {}} src={Set} alt="" />,
-                title: <p>{store.title}</p>,
-                right: <img onClick={() => {PopupTab()}} src={Ask} alt="" />
-              }}
-            >
-            </van-nav-bar> */}
-          </header>
-          <main id="main">
-            <ul>
-              {store.message && store.message.messages.map((val, index) => {
-                return val.role === 'user' ? <li key={index} class={val.role}>
-                  <div class="wrap">
-                    <div class={'info'}>
-                      <span> 用户 </span>
-                      <div class="pix"><img src={UserIcon} alt="" /></div>
-                    </div>
-                    <div class={'mark'}>
-                      <Markdown source={val.content} />
-                    </div>
-                  </div>
-                </li> :
-                  <li key={index} class={val.role}>
-                    <div class="wrap">
-                      <div class='info'>
-                        <div class="pix"><img src={chartGPTIcon} alt="" /></div>
-                        <span>AI Chat</span>
-                      </div>
-                      <div class='mark'>
-                        {index+1 === store.message.messages.length ? (!store.loading ? <Markdown source={val.content} /> : <span class={'think'}>努力思考中... <img src={Loading} alt="" /></span>) : <Markdown source={val.content} /> }
-                        {!!index && <van-divider />}
-                        {!!index && !store.loading ? store.netErr ?  <img src={Loading} alt="" onClick={() => {algin}} />  : <img onClick={() => {copy(val.content)}} src={Copy} alt="" />  : '' }
-                      </div>
-                    </div>
-                  </li>
-              })}
-            </ul>
-          </main>
-          <footer>
-            <van-search
-              vModel={txt.value}
-              showAction
-              placeholder="您的问题..."
-              onSearch="onSearch"
-              v-slots={{
-                action: <div onClick={() => { onSend() }}><van-button disabled={store.loading} type="primary" size="small">{!store.loading ? '发送' : '思考中'}</van-button></div>
-              }}
-            >
-            </van-search>
-          </footer>
-
-        </div>
-        <Drag onClick={() => {PopupTab()}}></Drag>
-      </div>
-    )
-  },
+                        </van-collapse>
+                        <div class="send">
+                            <div class="send-msg">
+                                <input type="text" onKeyup={handleEnter} vModel={txt.value} placeholder="请输入任意内容" />
+                                <img src={pen} onClick={() => { info(txt.value) }} alt="" />
+                            </div>
+                        </div>
+                        </div>
+                       
+                    </main>
+                    :
+                    <main>
+                        <div class="two">
+                            <ul>
+                                <li>
+                                    <img src={local.value && local.value.avatar} alt="" />
+                                    <p> 
+                                        <span>{local.value && local.value.username}</span>
+                                        <span>剩余消息次数：<span>{store.chatTimes.chat_times}</span></span>
+                                   </p>
+                                    
+                                </li>
+                                <li onClick={() => {store.OpenOff()}}>
+                                <p>
+                                      我的邀请码：{local.value && local.value.referral_code}
+                                </p>
+                                <span>
+                                    每邀请一人可获得10次消息次数！
+                                </span>
+                                <img src={share} alt="" />
+                                </li>
+                                <li>
+                                    <span>反馈意见</span> 
+                                    <textarea name="" id="" vModel={feed.value} placeholder="提供有价值的意见可获得消息次数哦！" cols="30" rows="10" maxlength={100}></textarea>
+                                    <div className="but">
+                                    <van-button type="primary" onClick={() => { sendFeedback() }} size="small">提交</van-button>
+                                    </div>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    </main>
+                    }
+                    <footer>
+                        <van-tabs onClickTab={onClickTab}>
+                            <van-tab name={1} title="AI聊天"></van-tab>
+                            <van-tab name={2} title="我的"></van-tab>
+                        </van-tabs>
+                    </footer>
+                </div>
+            </div>
+        )
+    },
 });
-export default Main
+export default Home

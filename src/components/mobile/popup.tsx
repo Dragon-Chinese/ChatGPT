@@ -5,19 +5,27 @@ import del from '@/assets/icon/del.svg'
 // import { useMixin } from '@/hooks/useMixin'
 import { useStore } from '@/store/index'
 import '@/assets/popup.scss'
+import { useRouter, useRoute } from 'vue-router';
 const Popup = defineComponent({
   props: {
   },
   setup(props, context) {
+    const Route = useRoute()
+    const Router = useRouter()
     const store = useStore()
     const show = ref(false)
     const tabStatus = () => {
       show.value = !show.value
     }
     const activeChat = (val: number) => {
+      
       if(store.tabId == val) return;
       store.ActiveChat(val)
       tabStatus()
+      console.log(Route.name)
+      if(Route.name == 'home') {
+        Router.push('/message')
+      }
     }
     const newChat = () => {
       store.CreateMessage()

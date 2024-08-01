@@ -87,7 +87,7 @@
                 Number(data.clientHeight) - floatDragDom.value?.offsetHeight - props.distanceBottom;
               initDraggable();
             });
-            const local = sessionStorage.getItem('user')
+            const local = localStorage.getItem('user')
             const user = local && JSON.parse(local)
             user.value = user ? user.avatar : null
             avatar.value = user.value || ava
@@ -235,7 +235,7 @@
       .content {
         width: 40px;
         height: 40px;
-        box-shadow: 0px 0px 5px 2px #1989fa;
+        box-shadow: 0px 0px 5px 2px #aaa;
         border-radius: 50%;
         position: relative;
         // padding: 0.5em;

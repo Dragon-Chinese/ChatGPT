@@ -9,14 +9,20 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
  */
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    redirect: '/mp/home'
+    path: '/message',
+    name: 'message',
+    component:  () => import ('@/pages/mobile/message'),
+    meta: { title: '首页', key: '/cms/message' }
   },
   {
-    path: '/mp/home',
+    path: '/',
     name: 'home',
     component:  () => import ('@/pages/mobile/home'),
-    meta: { title: '首页', key: '/cms/home' }
+    meta: { title: '消息', key: '/cms/home' }
+  },
+  {
+    path: '/:pathMatch(.*)',
+    redirect: '/'
   }
 ]
 

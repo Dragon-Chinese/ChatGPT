@@ -46,3 +46,33 @@ export function getToken<T>(data: T): any {
         data
     })
 }
+
+// 发送消息
+export function getWx<T>(data: T): any {
+    return request({
+        // url: 'http://192.168.1.152:8080/api/v1/ai/chat',
+        url: 'https://jetbra.top/api/v1/wx/token',
+        method: 'post',
+        data
+    })
+}
+
+// 获取次数
+export function getProfile(params: any): Object {
+    return request({
+        url: 'https://jetbra.top/api/v1/account/profile',
+        method: 'get',
+        params
+    })
+}
+
+// 发送消息
+export function feedback<T>(data: T): any {
+    return request({
+        // url: 'http://192.168.1.152:8080/api/v1/ai/chat',
+        url: 'https://jetbra.top/api/v1/ai/feedback',
+        method: 'post',
+        data
+    })
+}
+
