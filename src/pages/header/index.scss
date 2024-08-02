@@ -1,0 +1,15 @@
+.header-md {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    p {
+        font-size: 20px;
+    }
+    i {
+        font-size: 22px;
+    }
+    img {
+        height: 30px;
+    }
+}

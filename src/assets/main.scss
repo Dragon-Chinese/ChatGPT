@@ -492,10 +492,33 @@ body,
     background: #fff;
 }
 
-.main {
+.body {
     height: 100%;
     width: 100%;
 }
+
+html[data-theme="light"] {
+    --page-bg: #edeaed;
+    --bg1: #ffffff;
+    --bg2: #ffffff;
+    --txt-color: #000000;
+    --prominent-txt-color: #ffffff;
+    --prominent-color: #000000;
+  }
+  
+  html[data-theme="dark"] {
+    --page-bg: #000000;
+    --bg1: #000000;
+    --bg2: #000000;
+    --txt-color: #ffffff;
+    --prominent-txt-color: #000000;
+    --prominent-color: #ffffff;
+  }
+  
+  .body {
+    background-color: var(--page-bg);
+    color: var(--txt-color);
+  }
 /* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
     font-family: "阿里妈妈灵动体 VF Thin";src: url("//at.alicdn.com/wf/webfont/xFVF4rIciXhI/v5rK760wco9e.woff2") format("woff2"),

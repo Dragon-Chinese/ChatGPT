@@ -3,7 +3,7 @@ import { computed, ref, watch } from "vue-demi";
 import { ElMessage } from 'element-plus'
 import Markdown from 'vue3-markdown-it';
 // import { useMixin } from '@/hooks/useMixin'
-import '@/assets/h5.scss'
+// import '@/assets/h5.scss'
 import chartGPTIcon from '@/assets/icon/ie-ChatGPT.svg'
 import UserIcon from '@/assets/icon/user.svg'
 import Ask from '@/assets/icon/chatgpt_Ask_one.svg'
