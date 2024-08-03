@@ -26,7 +26,9 @@ const Main = defineComponent({
               < Header_md />
             </el-header>
             <el-main style={{
-              paddingTop: '0rem'
+              paddingTop: '0rem',
+              paddingRight:'0.4rem',
+              paddingLeft:'0.4rem'
             }}>
               <RouterView />
             </el-main>

@@ -8,17 +8,17 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
  * 创建路由对象
  */
 const routes: Array<RouteRecordRaw> = [
-  // {
-  //   path: '/market',
-  //   name: 'market',
-  //   component:  () => import ('@/pages/market/index'),
-  //   meta: { title: '首页', key: '/cms/market' }
-  // },
+  {
+    path: '/market',
+    name: 'market',
+    component:  () => import ('@/pages/market/index'),
+    meta: { title: '发现', key: '/cms/market' }
+  },
   {
     path: '/message',
     name: 'message',
     component:  () => import ('@/pages/mobile/message'),
-    meta: { title: '首页', key: '/cms/message' }
+    meta: { title: '会话', key: '/cms/message' }
   },
   {
     path: '/',
