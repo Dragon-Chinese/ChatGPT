@@ -504,6 +504,9 @@ html[data-theme="light"] {
     --txt-color: #000000;
     --prominent-txt-color: #ffffff;
     --prominent-color: #000000;
+    --ft-color: rgba(242, 237, 254, 0.24) transparent;
+    --ft-color-active: rgba(242, 237, 254, 0.24) transparent;
+    --input-top: #111111;
   }
   
   html[data-theme="dark"] {
@@ -513,6 +516,9 @@ html[data-theme="light"] {
     --txt-color: #ffffff;
     --prominent-txt-color: #000000;
     --prominent-color: #ffffff;
+    --ft-color: #737177;
+    --ft-color-active: #FFF;
+    --input-top: #111111;
   }
   
   .body {

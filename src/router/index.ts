@@ -8,6 +8,12 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
  * 创建路由对象
  */
 const routes: Array<RouteRecordRaw> = [
+  // {
+  //   path: '/market',
+  //   name: 'market',
+  //   component:  () => import ('@/pages/market/index'),
+  //   meta: { title: '首页', key: '/cms/market' }
+  // },
   {
     path: '/message',
     name: 'message',

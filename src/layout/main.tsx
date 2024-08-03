@@ -6,6 +6,7 @@ import { RouterView } from "vue-router";
 import { toggleDark, isDark } from '@/composables/index.ts'
 import './index.scss'
 import Header_md from '@/pages/header/index'
+import Footer_md from '@/pages/footer/index'
 const Main = defineComponent({
   props: {
   },
@@ -18,10 +19,8 @@ const Main = defineComponent({
         <p>分享到好友或朋友圈</p>
         <p>成功邀请一个好友可获得10次消息次数哦！！！</p>
         </div>} */}
-
         <el-container>
           <el-aside class="hidden-xs-only" width="60px">Aside</el-aside>
-
           <el-container>
             <el-header style="height: 1.2rem">
               < Header_md />
@@ -31,7 +30,7 @@ const Main = defineComponent({
             }}>
               <RouterView />
             </el-main>
-            <el-footer>Footer</el-footer>
+            <el-footer style="border-top:1px solid rgba(69, 68, 72, 0.25);height:1.3rem"><Footer_md /></el-footer>
           </el-container>
           
         </el-container>

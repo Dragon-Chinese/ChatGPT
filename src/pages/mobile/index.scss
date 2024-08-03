@@ -1,4 +1,10 @@
 .home {
+    .input_md {
+        .el-input__wrapper {
+            background: var(--input-top);
+            box-shadow: none;
+        }
+    }
     .top_chat {
         display: flex;
         align-items: center;

@@ -5,12 +5,13 @@ import path from 'path';
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import removeConsole from 'vite-plugin-remove-console';
 import viteCompression from 'vite-plugin-compression'
-
+import svgLoader from 'vite-svg-loader';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    svgLoader(), // 添加这个插件
     removeConsole(),
     viteCompression({ // gzip静态资源压缩配置
       verbose: true,
