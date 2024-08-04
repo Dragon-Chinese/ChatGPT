@@ -4,7 +4,8 @@ import { Search } from '@element-plus/icons-vue'
 import people from '@/assets/images/people.png'
 import './index.scss'
 import tou from '@/assets/images/tou.png'
-const Home = defineComponent({
+import data from './data.js'
+const Market = defineComponent({
     props: {
     },
     setup(props) {
@@ -13,134 +14,56 @@ const Home = defineComponent({
         }
         const input2 = ref('')
         onMounted(() => {
-            console.log(isDark)
+            console.log(data)
         })
 
         return () => (
-            <div class='home'>
-              <el-input
-                v-model={input2.value}
-                placeholder="搜索助手"
-                prefix-icon={Search}
-                style="margin-top: -.3rem"
-                class='input_md'
-              />
-            <div className="top_chat">
-                <img src={people} alt="" /> <p>随便聊聊</p>
-            </div>
-            <div className="title_ul">
-                <p>AI助手列表</p>
-            </div>
-              <ul>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
-                <li>
-                    <img src={tou} alt="" />
-                    <div className="right_li">
-                        <p>脏话学习助手</p>
-                        <span>啊八八八八啊八八八八八八八八阿八八八</span>
-                    </div>
-                </li>
+            <div class='market'>
+                <el-input
+                    v-model={input2.value}
+                    placeholder="搜索助手名称介绍或关键词..."
+                    prefix-icon={Search}
+                    style="margin-top: -.3rem"
+                    class='input_md'
+                />
 
-              </ul>
-                <button
-                    class="border-none w-full bg-transparent cursor-pointer"
-                    style="height: var(--ep-menu-item-height)"
-                    onClick={() => clickA()}
-                >
-                    点
-                </button>
+                <ul>
+                    {
+                        data.tags.map(item => {
+                            return <li key={item}>
+                                <span>
+                                    {item}
+                                </span>
+                            </li>
+                        })
+                    }
+                </ul>
+
+                <h2>
+                    全部助手
+                </h2>
+                <ol>
+                    {
+                        data.agents.map(item => {
+                            return <li>
+                            <div class="title">{item.meta.title}</div>
+                            <p>{item.meta.description}</p>
+                            <div className="ul">
+                                {
+                                    item.meta.tags.map(val => {
+                                        return <span>
+                                            {val}
+                                        </span>
+                                    })
+                                }
+                            </div>
+                        </li>
+                        })
+                    }
+                    
+                </ol>
             </div>
         )
     },
 });
-export default Home
+export default Market

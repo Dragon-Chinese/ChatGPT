@@ -1,5 +1,6 @@
 import { defineComponent, reactive, ref } from "vue";
 import { useStore } from '@/store/index';
+import { useRouter } from 'vue-router';
 import './index.scss';
 import ChatIcon from '@/assets/svg/chat.svg?component'; 
 import SearchIcon from '@/assets/svg/serach.svg?component'; 
@@ -10,6 +11,7 @@ const Footer_md = defineComponent({
   setup() {
     const store = useStore();
     const avtive = ref('/')
+    const router = useRouter();
     const footerList = reactive({
       data: [
         {
@@ -22,7 +24,7 @@ const Footer_md = defineComponent({
           name: '发现',
           icon: SearchIcon,
           active: '',
-          link: '/search'
+          link: '/market'
         },
         {
           name: '我',
@@ -35,6 +37,7 @@ const Footer_md = defineComponent({
 
     const JumpLink = (url: string) => {
       avtive.value = url
+      router.push(url); // 使用 router.push 跳转路由
     }
 
     return () => (

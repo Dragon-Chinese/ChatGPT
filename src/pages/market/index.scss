@@ -1,52 +1,75 @@
-.home {
+.market {
     .input_md {
         .el-input__wrapper {
             background: var(--input-top);
             box-shadow: none;
         }
     }
-    .top_chat {
-        display: flex;
-        align-items: center;
-        margin-top: 18px;
-        img {
-            height: 36.8px;
-        }
-        p {
-            font-size: 16px;
-            margin-left: 12px;
-        }
-    }
-    .title_ul {
-        padding-top: 18px;
-        p {
-            color: rgba(242, 237, 254, 0.24);
-            font-size: 14px;
-        }
-    }
     ul {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        flex-wrap: wrap;
         li {
+            border-radius: 27px;
+            background: #111111;
+            height: 27px;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            margin-top: 18px;
-            img {
-                height: 46px;
-                background: #f04f88;
-                border-radius: 1rem;
-                padding: 5px;
-                box-sizing: border-box;
+            justify-content: center;
+            padding: 1.5px 13.5px;
+            cursor: pointer;
+        }
+    }
+    h2 {
+        font-size: 20px;
+        margin: 20px 0;
+    }
+    ol {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        li {
+            min-width: 100%;
+            min-height: 120px;
+            padding: 16px;
+            background: #111111;
+            display: flex;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            gap: 12px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            .title {
+                font-size: 18px;
+                font-weight: 600;
             }
-            .right_li {
-                margin-left: 12px;
+            p {
+                font-size: 14px;
+                color: #6f6f6f;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2; /* 显示的行数 */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                height: 3em; /* 行高的倍数 */
+                line-height: 1.5em; /* 行高 */
+                max-height: 3em; /* 和height一致 */
+            }
+            .ul {
                 display: flex;
-                flex-direction: column;
-                p {
-                    font-size: 16px;
-                }
+                flex-direction: row;
+                gap: 6px;
+                flex-wrap: wrap;
                 span {
+                    color: #aaaaaa !important;
+                    background: rgba(255, 255, 255, 0.10);
+                    border: 5px;
                     font-size: 12px;
-                    margin-top: 8px;
-                    color: #737177;
+                    padding: 3px 7px;
                 }
             }
         }

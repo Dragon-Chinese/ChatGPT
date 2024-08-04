@@ -1,0 +1,100 @@
+.me {
+    .input_md {
+        .el-input__wrapper {
+            background: var(--input-top);
+            box-shadow: none;
+        }
+    }
+
+    .head {
+        
+        .li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            gap: 4px;
+            >p {
+                img {
+                    height: 46px;
+                    width: 46px;
+                }
+                span {
+                    font-size: 16px;
+                    margin-left: 10px;
+                }
+            }
+            >span {
+                font-size: 12px;
+            }
+
+            .span {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                align-items: center;
+                background: #111111;
+                display: flex;
+                flex: 1 1 0%;
+                gap: 2px;
+                padding-block: 6px;
+                padding-inline: 8px;
+                background: rgba(255, 255, 255, 0.06);
+                border-radius: 5px;
+                p {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                span {
+                    font-size: 12px;
+                    margin-top: 8px;
+                }
+            }
+        }
+    }
+    .line {
+        flex: none;
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.04);
+        margin-top: 10px;
+        box-sizing: border-box;
+        vertical-align: baseline;
+    }
+
+    .card {
+        background: #111111;
+        border-radius: 8px;
+        margin-top: 20px;
+        padding: 16px;
+        .but {
+            display: flex;
+            justify-content: end;
+            margin-top: 8px;
+        }
+        .textarea_me  {
+            border: none;
+            margin-top: 15px;
+            .el-input__count {
+                background: var(--input-top);
+            }
+            textarea {
+                background: var(--input-top);
+                box-shadow: black;
+            }
+            
+           
+        }
+        p {
+            font-size: 16px;
+            font-weight: bold;
+            &.share {
+                margin-top: 10px;
+            }
+        }
+        span {
+            font-size: 14px;
+        }
+    }
+
+}
