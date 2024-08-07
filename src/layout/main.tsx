@@ -28,8 +28,9 @@ const Main = defineComponent({
             </el-header>
             <el-main style={{
               paddingTop: '0rem',
-              paddingRight:'0.4rem',
-              paddingLeft:'0.4rem'
+              paddingRight:'0.3rem',
+              paddingLeft:'0.3rem',
+              paddingBottom:'0.2rem'
             }}>
               <RouterView />
             </el-main>

@@ -1,0 +1,170 @@
+.chat {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .input_md {
+        height: 36px;
+        margin-top: 0px !important;
+        flex: 1;
+        .el-input__wrapper {
+            background: var(--input-top);
+            box-shadow: none;
+        }
+    }
+    .hello , .message{
+        flex: 1;
+        overflow-y: auto;
+    }
+    .send {
+        height: 86px;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        border-block-start: 1px solid rgba(51, 51, 51, 0.25);
+        .top {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 12px;
+            align-items: center;
+            i {
+                font-size: 20px;
+            }
+            .token {
+                display: flex;
+                align-items: center;
+                color: #c4f042;
+                padding-block: 0;
+                padding-inline: 4px 9.6px;
+                background: rgba(255, 255, 255, 0.10);
+                border-radius: 14px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                overflow: hidden;
+                min-width: -webkit-fit-content;
+                min-width: -moz-fit-content;
+                min-width: fit-content;
+                height: 28px;
+                font-size: 13px;
+                line-height: 1;
+            
+                img {
+                    height: 20px;
+                }
+                span {
+                    font-size: 13px;
+                    margin-left: 5px;
+                }
+            }
+        }
+        .bot {
+             display: flex;
+             align-items: center;
+             .send_but {
+                border-radius: 5px;
+                height: 36px;
+                width: 36px;
+                background: rgb(238, 238, 238);
+                color: rgb(0, 0, 0);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 10px;
+                i {
+                    color: #111111;
+                    font-size: 20px;
+                }
+             }
+        }
+    }
+    .hello {
+        margin-top: 35px;
+        h2 {
+            display: flex;
+            align-items: center;
+            img {
+                height: 40px;
+                width: 40px;
+            }
+           
+        }
+        p {
+            margin-left: 5px;
+            font-size: 24px;
+        }
+
+        .help {
+            margin-top: 20px;
+            h3 {
+                font-size: 14px;
+                font-weight: normal;
+                color: #6f6f6f;
+                margin: 20px 0;
+            }
+            .msg {
+                font-size: 14px;
+                cursor: pointer;
+                padding-block: 12px;
+                padding-inline: 24px;
+                color: #ffffff;
+                background: #111111;
+                border-radius: 48px;
+                margin-bottom: 10px;
+                width: max-content;
+            }
+        }
+
+        ol {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            
+            li {
+                min-width: 100%;
+                min-height: 60px;
+                padding: 16px 16px 0 16px;
+                background: #111111;
+                display: flex;
+                gap: 8px;
+                box-sizing: border-box;
+                border-radius: 8px;
+                img {
+                    height: 40px;
+                }
+                .right {
+                    display: flex;
+                    -webkit-flex-direction: column;
+                    -ms-flex-direction: column;
+                    flex-direction: column;
+                    gap: 8px;
+                    .title {
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+                    p {
+                        font-size: 14px;
+                        color: #6f6f6f;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2; /* 显示的行数 */
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        height: 3em; /* 行高的倍数 */
+                        line-height: 1.5em; /* 行高 */
+                        max-height: 3em; /* 和height一致 */
+                    }
+                }
+                
+            }
+        }
+    }
+    .action {
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        line-height: 20px;
+        margin-top: 20px;
+    }
+}
+

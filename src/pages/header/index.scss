@@ -13,3 +13,29 @@
         height: 30px;
     }
 }
+
+.header-chat {
+    display: flex;
+    align-items: center;
+    .mid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        p {
+            font-size: 14px;
+        }
+        span {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            // color: #111111;
+            i {
+                font-size: 10px;
+                // border: 1rem solid #fff;
+            }
+        }
+    }
+}

@@ -1,15 +1,54 @@
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, reactive } from "vue";
 import { ElMessage } from 'element-plus';
 import Markdown from 'vue3-markdown-it';
 import 'github-markdown-css/github-markdown.css';
-
+import Had from '@/assets/images/had.png'
+import './index.scss'
+import tou from '@/assets/images/tou.png'
+import token from '@/assets/images/tokennum.png'
 const Chat = defineComponent({
   props: {},
   setup() {
     const resultText = ref(''); // 用于保存识别结果
     const isListening = ref(false); // 用于指示是否正在监听
     let recognition;
-
+    const data = reactive({
+      data: [
+        {
+            "author": "YBGuoYang",
+            "createAt": "2024-07-28",
+            "homepage": "https://github.com/YBGuoYang",
+            "identifier": "sichuan-university-941-c-programming-assistant",
+            "meta": {
+                "avatar": "🧙‍♂️",
+                "description": "辅助我进行c程序设计的学习",
+                "tags": [
+                    "941"
+                ],
+                "title": "c程序学习助手"
+            },
+            "schemaVersion": 1
+        },
+        {
+            "author": "tayhe",
+            "createAt": "2024-07-08",
+            "homepage": "https://github.com/tayhe",
+            "identifier": "deutsche-b-1",
+            "meta": {
+                "avatar": "🗣️",
+                "description": "为B1级学习者提供流利的德语会话伙伴",
+                "tags": [
+                    "语言交流",
+                    "学习支持",
+                    "教育",
+                    "德语学习"
+                ],
+                "title": "B1级德语会话伙伴"
+            },
+            "schemaVersion": 1
+        },
+      ]
+    })
     // 初始化语音识别
     onMounted(() => {
       if (!('webkitSpeechRecognition' in window)) {
@@ -76,17 +115,80 @@ const Chat = defineComponent({
     const stopListening = () => {
       recognition.stop();
     };
-
+    const input2 = ref('')
     return () => (
       <div class='chat'>
-        <div>
+        <div className="hello">
+          <h2>
+            <img src={Had} alt="" />
+            <p>
+                中午好
+            </p>
+          </h2>
+          <div className="action">
+            我是您的私人智能助理 智宝AI ，请问现在能帮您做什么？
+            <br />
+            如果需要获得专业的助手，可以点击 发现 找寻合适您的助手应用。
+          </div>
+          <div className="help">
+            <h3>小助手推荐</h3>
+            <ol>
+                    {
+                        data.data.map(item => {
+                            return <li>
+                              <img src={tou} alt="" />
+                              <div className="right">
+                                <div class="title">{item.meta.title}</div>
+                                <p>{item.meta.description}</p>
+                              </div>
+                        </li>
+                        })
+                    }
+                    
+                </ol>
+
+                <h3>大家都在问</h3>
+                
+                <div className="msg">
+                  智宝AI 是什么？
+                </div>
+                <div className="msg">
+                  我能用 智宝AI 做什么？
+                </div>
+          </div>
+        </div>
+        {/* <div className="message">
+
+        </div> */}
+        <div className="send">
+          <div className="top">
+          <el-icon><Microphone /></el-icon> <el-icon><Picture /></el-icon>
+          <div className="token">
+                  <img src={token} alt="" />
+                  <span>30</span>
+          </div>
+          </div>
+          <div className="bot">
+                <el-input
+                    v-model={input2.value}
+                    placeholder=""
+                    style="margin-top: -.3rem"
+                    class='input_md'
+                />
+                <div className="send_but">
+                  <el-icon><Promotion /></el-icon>
+                </div>
+          </div>
+        </div>
+        {/* <div>
           <button onClick={startListening} disabled={isListening.value}>开始录音</button>
           <button onClick={stopListening} disabled={!isListening.value}>停止录音</button>
-        </div>
-        <div class="markdown-body">
+        </div> */}
+        {/* <div class="markdown-body">
             {resultText.value}
           <Markdown>{resultText.value}</Markdown>
-        </div>
+        </div> */}
+
       </div>
     );
   },
