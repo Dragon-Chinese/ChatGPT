@@ -4,7 +4,7 @@ import request from '../utils/request'
 export function sendMsg<T>(data: T): any {
     return request({
         // url: 'http://192.168.1.152:8080/api/v1/ai/chat',
-        url: 'https://jetbra.top/api/v1/ai/chat',
+        url: 'https://api.zhibaoai.top/v1/chat',
         method: 'post',
         data
     })
@@ -13,27 +13,25 @@ export function sendMsg<T>(data: T): any {
 // 获取会话列表
 export function getChats(params: any): Object {
     return request({
-        url: 'https://jetbra.top/api/v1/ai/chats',
+        url: 'https://api.zhibaoai.top/v1/chats',
         method: 'get',
         params
     })
 }
 
 // 获取消息
-export function getChat(params: any): Object {
+export function getChat(chatID: number): Object {
     return request({
-        url: 'https://jetbra.top/api/v1/ai/chat',
-        method: 'get',
-        params
-    })
-}
+      url: `https://api.zhibaoai.top/v1/chat/${chatID}`,
+      method: 'get'
+    });
+  }
 
 // 删除消息
-export function delChat(params: any): Object {
+export function delChat(chatID: number): Object {
     return request({
-        url: 'https://jetbra.top/api/v1/ai/chat',
-        method: 'delete',
-        params
+        url: `https://api.zhibaoai.top/v1/chat/${chatID}`    ,
+        method: 'delete'
     })
 }
 
@@ -41,7 +39,7 @@ export function delChat(params: any): Object {
 export function getToken<T>(data: T): any {
     return request({
         // url: 'http://192.168.1.152:8080/api/v1/ai/chat',
-        url: 'https://jetbra.top/api/v1/wx/oauth',
+        url: 'https://api.zhibaoai.top/v1/wechat/oauth',
         method: 'post',
         data
     })
@@ -51,7 +49,7 @@ export function getToken<T>(data: T): any {
 export function getWx<T>(data: T): any {
     return request({
         // url: 'http://192.168.1.152:8080/api/v1/ai/chat',
-        url: 'https://jetbra.top/api/v1/wx/token',
+        url: 'https://api.zhibaoai.top/v1/wechat/token',
         method: 'post',
         data
     })
@@ -60,7 +58,7 @@ export function getWx<T>(data: T): any {
 // 获取次数
 export function getProfile(params: any): Object {
     return request({
-        url: 'https://jetbra.top/api/v1/account/profile',
+        url: 'https://api.zhibaoai.top/v1/user/profile',
         method: 'get',
         params
     })
@@ -70,7 +68,7 @@ export function getProfile(params: any): Object {
 export function feedback<T>(data: T): any {
     return request({
         // url: 'http://192.168.1.152:8080/api/v1/ai/chat',
-        url: 'https://jetbra.top/api/v1/ai/feedback',
+        url: 'https://api.zhibaoai.top/v1/feedback',
         method: 'post',
         data
     })

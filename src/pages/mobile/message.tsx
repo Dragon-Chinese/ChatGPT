@@ -26,6 +26,7 @@ const Main = defineComponent({
     // 008AFF
     const store = useStore()
     const Route = useRoute()
+    const router = useRouter()
     const txt = ref('')
     const childRef = ref(null)
     const user = ref(null)
@@ -122,7 +123,7 @@ const Main = defineComponent({
                 return val.role === 'user' ? <li key={index} class={val.role}>
                   <div class="wrap">
                     <div class={'info'}>
-                      <span> { user.value && user.value.username } </span>
+                      {/* <span> { user.value && user.value.username } </span> */}
                       <div class="pix"><img src={UserIcon} alt="" /></div>
                     </div>
                     <div class={'mark'}>
@@ -134,7 +135,7 @@ const Main = defineComponent({
                     <div class="wrap">
                       <div class='info'>
                         <div class="pix"><img src={chartGPTIcon} alt="" /></div>
-                        <span>AI Chat</span>
+                        {/* <span>AI Chat</span> */}
                       </div> 
                       <div class='mark'>
                         {index+1 === store.message.messages.length ? (!store.loading ? <Markdown source={val.content} /> : <span class={'think'}>努力思考中... <img src={Loading} alt="" /></span>) : <Markdown source={val.content} /> }

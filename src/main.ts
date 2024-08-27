@@ -10,7 +10,7 @@ import router from './router'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElTableNext from 'el-table-next';
 import Vant from 'vant';
-// import 'vant/lib/index.css';
+import 'vant/lib/index.css';
 import '@/permission'
 // import { resolve } from 'path'
 import * as func  from '@/utils/utils'
@@ -22,7 +22,7 @@ import { createPinia } from 'pinia' //引入pinia
 // import eruda from 'eruda'
 // const vConsole = new VConsole()
 // eruda.init()
-
+import 'element-plus/theme-chalk/dark/css-vars.css'
 import '@/assets/main.scss'
 const app = createApp(App)
 app.config.globalProperties.$mitt = mitt()

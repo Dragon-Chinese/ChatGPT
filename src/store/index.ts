@@ -11,7 +11,7 @@ export const useStore = defineStore("data", {
       title: "AI Chat",
       tabId: null,
       session: [],
-      message: null,
+      message: {messages: []},
       navList: [],
       loading: false,
       updateTime: '',
@@ -27,6 +27,12 @@ export const useStore = defineStore("data", {
     },
     //建议
     SendFeedback(content: any) {
+      if(content.length < 6) {
+        return Toast({
+          message: '不得低于10个字哦',
+          position: 'top',
+        });
+      }
       feedback({content}).then(res => {
         Toast({
           message: '反馈成功！',
@@ -41,46 +47,52 @@ export const useStore = defineStore("data", {
     },
     // 获取消息
     GetChat() {
-      getChat({ chat_id: this.tabId }).then(res => {
-        res.chat.messages.unshift({
-          role: 'assistant',
-          content: '您好，我是AI，有什么可以帮助您的'
-        });
+      getChat(this.tabId).then(res => {
         this.message = res.chat
         console.log(this.message)
       })
     },
     // 获取消息列表
-    GetChats (code) {
+    GetChats () {
       getChats({until: (this.updateTime && this.updateTime*1 - 1) || Math.floor(+new Date() / 1000) + 1000}).then(res => {
         res.chats && (this.navList = this.MergeAndRemoveDuplicatesByProperty(this.navList, res.chats, 'id'))
         const msg = sessionStorage.getItem('msg')
-        if(!this.navList.length) {
-          return this.CreateMessage()
-        }else {
-          this.updateTime = this.navList[this.navList.length -1].updated_at
-          console.log(this.navList)
-        }
+        // if(!this.navList.length) {
+        //   return this.CreateMessage()
+        // }else {
+        //   this.updateTime = this.navList[this.navList.length -1].updated_at
+        //   console.log(this.navList)
+        // }
+        if(!this.navList.length) return
+        this.updateTime = this.navList[this.navList.length -1].updated_at
         if(!this.tabId && !msg && location.hash !== '#/') {
           this.tabId = this.navList[0].id
           this.updateTime = this.navList[this.navList.length -1].updated_at
-          this.GetChat(true)
+          // this.GetChat(true)
         }
+        console.log(this.navList)
       })
+
+      
     },
     // 发送消息
-    SenMsg (txt: String) {
+    SenMsg (txt: String, system: String) {
+      console.log(txt)
+      if (!txt) {
+        Toast({
+          message: '请输入内容',
+          position: 'top',
+        });
+        return
+      }
       if(this.chatTimes.chat_times <= 0) {
         Toast({
           message: '可用消息次数：0',
           position: 'top',
         });
-        setTimeout(() => {
-          this.OpenOff()
-        }, 1000)
         return
       }
-      if (!txt) return
+      
         this.message.messages.push({
             role: 'user',
             content: txt
@@ -91,7 +103,16 @@ export const useStore = defineStore("data", {
         })
         this.loading = true
         this.netErr = false
-        sendMsg({message: txt, chat_id: this.tabId}).then(res => {
+
+        let messagePayload = {
+            message: txt,
+            system
+        };
+
+        if (this.tabId) {
+            messagePayload.chatID = this.tabId*1;
+        }
+        sendMsg(messagePayload).then(res => {
             this.message.messages[this.message.messages.length - 1].content = res.message.content
             this.loading = false
             if(!this.tabId) {
@@ -141,7 +162,7 @@ export const useStore = defineStore("data", {
     },
     // 删除会话
     DeleteItem (id: any) {
-      delChat({chat_id: id}).then(res => {
+      delChat(id).then(res => {
         this.navList = []
         this.updateTime  = ''
         this.tabId = null
@@ -152,17 +173,17 @@ export const useStore = defineStore("data", {
     GetProfile () {
       getProfile().then(res => {
         console.log('..............por', res.user)
-        this.chatTimes.chat_times = res.user.chat_times
+        this.chatTimes.chat_times = res.user.chatTimes
       })
     },
-    GetWx (code) {
-      getWx({url: 'https://jetbra.top/'}).then(res => {
+    GetWx () {
+      getWx({url: 'https://zhibaoai.top/mp'}).then(res => {
         console.log(res)
         wx.config({
           debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-          appId: res.app_id, // 必填，公众号的唯一标识
+          appId: res.appID, // 必填，公众号的唯一标识
           timestamp: Number(res.timestamp), // 必填，生成签名的时间戳
-          nonceStr: res.nonce_str, // 必填，生成签名的随机串
+          nonceStr: res.nonceStr, // 必填，生成签名的随机串
           signature: res.signature,// 必填，签名
           jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData'] // 必填，需要使用的JS接口列表
         });
@@ -170,9 +191,9 @@ export const useStore = defineStore("data", {
         setTimeout(() => {
           wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
             wx.updateAppMessageShareData({ 
-              title: 'AIchat 让一部分人先AI起来', // 分享标题
+              title: '智宝AI 您的生活助手', // 分享标题
               desc: '让一部分人先AI起来', // 分享描述
-              link: 'https://jetbra.top/#/?referral=' + my.referral_code, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              link: 'https://zhibaoai.top/#/?referral=' + my.refererCode, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: 'https://img1.baidu.com/it/u=2917569892,3712639231&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', // 分享图标
               success: function () {
                 // 设置成功
@@ -181,8 +202,8 @@ export const useStore = defineStore("data", {
             })
   
             wx.updateTimelineShareData({ 
-              title: 'AIchat 让一部分人先AI起来', // 分享标题
-              link: 'https://jetbra.top/#/?referral=' + my.referral_code, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              title: '智宝AI 您的生活助手', // 分享标题
+              link: 'https://zhibaoai.top/#/?referral=' + my.refererCode, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: 'https://img1.baidu.com/it/u=2917569892,3712639231&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500', // 分享图标
               success: function () {
                 // 设置成功

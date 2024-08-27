@@ -5,6 +5,7 @@ import people from '@/assets/images/people.png'
 import './index.scss'
 import tou from '@/assets/images/tou.png'
 import share from '@/assets/icon/share.svg'
+import { useStore } from '@/store/index.ts'
 const Me = defineComponent({
     props: {
     },
@@ -17,6 +18,19 @@ const Me = defineComponent({
         //     console.log(isDark)
         // })
         const textarea = ref('')
+        const user = ref(null)
+        const store = useStore()
+        onMounted(() => {
+            user.value = JSON.parse(localStorage.getItem('user'))
+            store.GetProfile()
+        })
+
+        const SendFeedback = () => {
+            if(!textarea.value) return
+            store.SendFeedback(textarea.value)
+            textarea.value = ''
+        }
+
 
         return () => (
             <div class='me'>
@@ -33,12 +47,12 @@ const Me = defineComponent({
                     </div>
                     <div class="li">
                         <div className="span">
-                            <p>30</p>
+                            <p>{store.chatTimes.chat_times}</p>
                             <span>剩余消息次数</span>
                             
                         </div>
                         <div className="span">
-                             <p>9</p>
+                             <p>&</p>
                             <span>话题</span>
                         </div>
                         <div className="span">
@@ -50,7 +64,7 @@ const Me = defineComponent({
                 <div className="line"></div>
                 <div className="card">
                         <p>
-                            我的邀请码：HJLK52
+                            我的邀请码：{user.value && user.value.refererCode}
                         </p>
                         <p class="share">
                             点击分享
@@ -72,7 +86,7 @@ const Me = defineComponent({
                             class="textarea_me"
                         />
                         <div className="but">
-                        <el-button>提交</el-button>
+                        <el-button onClick={() => {SendFeedback()}}>提交</el-button>
                         </div>
                 </div>
                 {/* <li onClick={() => { store.OpenOff() }}>

@@ -3,7 +3,7 @@ import { useStore } from '@/store/index.ts'
 import { getToken } from '@/api/mixin'
 const authorize = () => {
     const baseUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10cede6667d6d736&';
-    const redirectUrl = 'https://jetbra.top/'; // 假设这是你的回调URL
+    const redirectUrl = 'https://zhibaoai.top/mp'; // 假设这是你的回调URL
     const state = '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     // 对redirectUrl进行URL编码
     const encodedRedirectUrl = encodeURIComponent(redirectUrl);
@@ -15,12 +15,22 @@ const authorize = () => {
     console.log(authUrl)
     window.location.href = authUrl;
 }
+
 // https://jetbra.top?code=ReferralCode
 router.beforeEach(async (to, from, next) => {
     const store = useStore()
     console.log(to.query.referral)
-
+    // authorize()
+    // getToken({ code: '031T1v00017DIS1xqM30017xEb3T1v0V', refererCode:'' }).then(res => {
+    //     localStorage.setItem('token', res.token)
+    //     localStorage.setItem('user', JSON.stringify(res.user))
+    //     var _url = window.location.protocol + '//' + window.location.host + '/'
+    //     window.history.pushState({}, 0, _url)
+    //     // store.GetChats(code)
+    //     return next()
+    // })
     return next()
+    return
     if(to.query.referral) {
         localStorage.setItem('referral', to.query.referral)
     }
@@ -67,3 +77,13 @@ router.beforeEach(async (to, from, next) => {
 
 
 // eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJqZXRicmEudG9wIiwic3ViIjoiNDUiLCJhdWQiOlsiamV0YnJhLnRvcCJdLCJleHAiOjE3MDE0MTY2NDgsIm5iZiI6MTcwMTMzMDI0OCwiaWF0IjoxNzAxMzMwMjQ4LCJqdGkiOiJqcEZidHc2YWdnc0RMVmNZajljSGRZIn0.vVPEOM3y7UXBERCqK5SVdSNLbHoEoNhAR3nq33lJp1If17BGQnmw9wB8PITXeIK1mqRAZGWDuZp1SfW5-MNtAQ
+
+
+// "token": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ6aGliYW9haS50b3AiLCJzdWIiOiIyIiwiYXVkIjpbInpoaWJhb2FpLnRvcCJdLCJleHAiOjE3MjQ2NDU3NDAsIm5iZiI6MTcyNDU1OTM0MCwiaWF0IjoxNzI0NTU5MzQwLCJqdGkiOiJuYWY2R0tnYmhVd05ORXpwUWNFNXZ2In0.Ic0uMGfFL92B1E04qfPfpHFBH4KA-zQXsiQdCIysafMA2OV0eebTCFitA_D_Q6KBFka_SafsMrQjizPpy3tKBQ",
+//   "user": {
+//     "name": "五五开",
+//     "avatar": "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83ep2ssciag6HMpY8fAQPlPicjlDPdXhS8yibibDq0RcOhAGRdEzOL4CvicIvaHQC8ib3uyKtZdtQPXALKWyQ/132",
+//     "chatTimes": 100,
+//     "refererID": 0,
+//     "refererCode": "VH8CFU"
+//   }
