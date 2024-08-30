@@ -47,11 +47,14 @@ const Home = defineComponent({
                 store.tabId = null
                 store.message.messages = []
                 console.log(id)
+                router.push({name: 'chat'})
+            } else {
+                router.push({
+                    name: 'chat',
+                    query: { id }
+                })
             }
-            router.push({
-                name: 'message',
-                query: { id }
-            })
+            
         }
 
         const market = () => {
