@@ -21,7 +21,7 @@ router.beforeEach(async (to, from, next) => {
     const store = useStore()
     console.log(to.query.referral)
     // authorize()
-    // getToken({ code: '011gKeGa1fN75I0TMQHa1JqFcq0gKeGf', refererCode:'' }).then(res => {
+    // getToken({ code: '081oZp000MYMJS1idt100Kha8t4oZp06', refererCode:'' }).then(res => {
     //     localStorage.setItem('token', res.token)
     //     localStorage.setItem('user', JSON.stringify(res.user))
     //     var _url = window.location.protocol + '//' + window.location.host + '/'
@@ -30,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
     //     return next()
     // })
     return next()
-    return
+    // return
     if(to.query.referral) {
         localStorage.setItem('referral', to.query.referral)
     }

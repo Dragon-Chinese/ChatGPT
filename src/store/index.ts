@@ -3,7 +3,7 @@ import { defineStore } from 'pinia' //引入pinia
 import wx from "weixin-js-sdk"
 import { getChats, getChat, sendMsg, delChat, getWx, getProfile, feedback } from '@/api/mixin'
 import chartGPTIcon from '@/assets/icon/ie-ChatGPT.svg'
-import { Toast } from 'vant';
+import { showToast } from 'vant';
 //这里官网是单独导出  是可以写成默认导出的  官方的解释为大家一起约定仓库用use打头的单词 固定统一小仓库的名字不易混乱
 export const useStore = defineStore("data", {
   state: () => {
@@ -17,7 +17,9 @@ export const useStore = defineStore("data", {
       updateTime: '',
       netErr: false,
       chatTimes: {chat_times: 10},
-      shareShow: false
+      shareShow: false,
+      headTit: '新会话',
+      system: '我是智宝AI，可以理解并回答你的问题'
     }) //为了避免出错，返回的值用()包起来
   },
   actions: {
@@ -28,13 +30,13 @@ export const useStore = defineStore("data", {
     //建议
     SendFeedback(content: any) {
       if(content.length < 6) {
-        return Toast({
+        return showToast({
           message: '不得低于10个字哦',
           position: 'top',
         });
       }
       feedback({content}).then(res => {
-        Toast({
+        showToast({
           message: '反馈成功！',
           position: 'top',
         });
@@ -49,6 +51,7 @@ export const useStore = defineStore("data", {
     GetChat() {
       getChat(this.tabId).then(res => {
         this.message = res.chat
+        this.system = res.chat.messages[0].content
         console.log(this.message)
       })
     },
@@ -76,17 +79,17 @@ export const useStore = defineStore("data", {
       
     },
     // 发送消息
-    SenMsg (txt: String, system: String) {
+    SenMsg (txt: String ) {
       console.log(txt)
       if (!txt) {
-        Toast({
+        showToast({
           message: '请输入内容',
           position: 'top',
         });
         return
       }
       if(this.chatTimes.chat_times <= 0) {
-        Toast({
+        showToast({
           message: '可用消息次数：0',
           position: 'top',
         });
@@ -106,7 +109,7 @@ export const useStore = defineStore("data", {
 
         let messagePayload = {
             message: txt,
-            system
+            system: this.system
         };
 
         if (this.tabId) {
@@ -180,7 +183,7 @@ export const useStore = defineStore("data", {
       getWx({url: 'https://zhibaoai.top/mp'}).then(res => {
         console.log(res)
         wx.config({
-          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId: res.appID, // 必填，公众号的唯一标识
           timestamp: Number(res.timestamp), // 必填，生成签名的时间戳
           nonceStr: res.nonceStr, // 必填，生成签名的随机串

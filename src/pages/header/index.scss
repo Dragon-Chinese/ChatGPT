@@ -4,7 +4,8 @@
     align-items: center;
     height: 100%;
     p {
-        font-size: 20px;
+        font-size: 22px;
+        font-family: "阿里妈妈刀隶体 Regular", sans-serif;
     }
     i {
         font-size: 22px;
@@ -25,6 +26,12 @@
         margin-top: 10px;
         p {
             font-size: 14px;
+            white-space: nowrap;         /* 强制文本不换行 */
+            overflow: hidden;            /* 超出部分隐藏 */
+            text-overflow: ellipsis;     /* 超出的文本显示省略号 */
+            width: 200px;    
+            text-align: center;            /* 设置容器宽度 */
+            
         }
         span {
             font-size: 12px;

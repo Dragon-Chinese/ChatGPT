@@ -176,7 +176,7 @@
         >.ul {
             height: auto;
             width: 100%;
-            padding: 0px 15px;
+            padding: 0px 0px;
             box-sizing: border-box;
 
             >li {
@@ -195,11 +195,18 @@
                         background: rgba(255, 255, 255, 0.10);
                         padding: 10px;
                         border-radius: 6px;
-
+                        position: relative;
                         .van-divider {
                             margin: 3px;
                         }
-
+                        >svg {
+                            width: 14px;
+                            height: 14px;
+                            fill: blue;
+                            position: absolute;
+                            right: 10px;
+                            bottom: 5px;
+                        }
                         >img {
                             height: 20px;
                             float: right;

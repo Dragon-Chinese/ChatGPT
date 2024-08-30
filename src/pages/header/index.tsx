@@ -3,6 +3,7 @@ import { useStore } from '@/store/index'
 import people from '@/assets/images/people.png'
 import './index.scss'
 import { useRouter, useRoute } from 'vue-router';
+import dataAll from '../data.js'
 const Header_md = defineComponent({
   props: {
   },
@@ -16,6 +17,9 @@ const Header_md = defineComponent({
     }
     const pathUrl = (url) => {
       console.log(url)
+      store.message.messages = []
+      store.system = '我是智宝AI，可以理解并回答你的问题'
+      store.tabId = null
       router.push({
         name: url
       })
@@ -23,6 +27,17 @@ const Header_md = defineComponent({
     onMounted(() => {
       user.value = JSON.parse(localStorage.getItem('user'))
     })
+
+    const systemFil = (val) => {
+      let a = '智宝AI助手'
+      dataAll.forEach(element => {
+        if(element.description == store.system) {
+          a = element.title
+        }
+      });
+
+      return a
+    }
     return () => (
       <>
         {route.path == '/' ? <div className="header-md">
@@ -31,8 +46,9 @@ const Header_md = defineComponent({
           <div className="header-md header-chat">
                 <el-icon onClick={() => {back()}}><ArrowLeftBold /></el-icon>
                 <div className="mid">
-                  <p>新会话</p>
-                  {/* <span>随便聊聊 <el-icon><CaretBottom /></el-icon></span> */}
+                  <p>{store.headTit}</p>
+                  {route.path == '/chat' && <span>{systemFil()}</span>}
+                  {/* <el-icon><CaretBottom /></el-icon> */}
                   <span></span>
                 </div>
                 <el-icon ><Share /></el-icon>

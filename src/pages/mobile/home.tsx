@@ -42,16 +42,17 @@ const Home = defineComponent({
             store.DeleteItem(command)
         }
 
-        const message = (id: any) => {
+        const message = (id: any, msg: any) => {
             if(!id) {
                 store.tabId = null
                 store.message.messages = []
                 console.log(id)
+                store.system = '我是智宝AI，可以理解并回答你的问题'
                 router.push({name: 'chat'})
             } else {
                 router.push({
                     name: 'chat',
-                    query: { id }
+                    query: { id, msg }
                 })
             }
             
@@ -96,7 +97,7 @@ const Home = defineComponent({
 
                         return <li>
                             <img src={tou} alt="" />
-                            <div className="right_li" onClick={() => { message(item.id) }}>
+                            <div className="right_li" onClick={() => { message(item.id, item.title) }}>
                                 <p>{item.title}</p>
                                 <span>创建时间：{formattedDate}</span>
                             </div>
