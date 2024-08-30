@@ -12,17 +12,17 @@ const routes: Array<RouteRecordRaw> = [
     path: '/market',
     name: 'market',
     component:  () => import ('@/pages/market/index'),
-    meta: { title: '发现', key: '/cms/market' }
+    meta: { title: '助手', key: '/cms/market' }
   },
   {
     path: '/me',
     name: 'me',
     component:  () => import ('@/pages/me/index'),
-    meta: { title: '我', key: '/cms/me' }
+    meta: { title: '我的', key: '/cms/me' }
   },
   {
     path: '/chat',
-    name: 'message',
+    name: 'chat',
     component:  () => import ('@/pages/chat/index'),
     meta: { title: '聊天列表', key: '/cms/chat' }
   },

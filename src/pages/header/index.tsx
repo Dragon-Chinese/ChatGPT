@@ -14,21 +14,28 @@ const Header_md = defineComponent({
     const back = () => {
       router.go(-1)
     }
+    const pathUrl = (url) => {
+      console.log(url)
+      router.push({
+        name: url
+      })
+    }
     onMounted(() => {
       user.value = JSON.parse(localStorage.getItem('user'))
     })
     return () => (
       <>
         {route.path == '/' ? <div className="header-md">
-                  <p><img src={user.value ? user.value.avatar : people} alt="" /> 智宝AI</p><el-icon><Edit /></el-icon>
+                  <p><img src={user.value ? user.value.avatar : people} alt="" /> 智宝AI</p><el-icon onClick={() => {pathUrl('chat')}}><Edit /></el-icon>
           </div> : 
           <div className="header-md header-chat">
                 <el-icon onClick={() => {back()}}><ArrowLeftBold /></el-icon>
                 <div className="mid">
                   <p>新会话</p>
-                  <span>随便聊聊 <el-icon><CaretBottom /></el-icon></span>
+                  {/* <span>随便聊聊 <el-icon><CaretBottom /></el-icon></span> */}
+                  <span></span>
                 </div>
-                <el-icon><Share /></el-icon>
+                <el-icon ><Share /></el-icon>
           </div> 
           
           }

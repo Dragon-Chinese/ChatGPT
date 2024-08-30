@@ -21,7 +21,7 @@ const Footer_md = defineComponent({
           link: '/'
         },
         {
-          name: '发现',
+          name: '助手',
           icon: SearchIcon,
           active: '',
           link: '/market'

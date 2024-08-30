@@ -54,6 +54,12 @@ const Home = defineComponent({
             })
         }
 
+        const market = () => {
+            router.push({
+                name: 'market'
+            })
+        }
+
         return () => (
             <div class='home'>
                 <el-input
@@ -111,7 +117,7 @@ const Home = defineComponent({
                         </li>
                     }) : <el-empty description="您还没有历史对话">
                     <el-button plain onClick={() => {message('')}}>新建对话</el-button>
-                    <el-button plain>精选助手</el-button>
+                    <el-button plain onClick={() => {market()}}>精选助手</el-button>
                 </el-empty>}
 
                 </ul>
