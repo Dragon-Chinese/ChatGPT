@@ -3,7 +3,7 @@ import { useStore } from '@/store/index.ts'
 import { getToken } from '@/api/mixin'
 const authorize = () => {
     const baseUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx10cede6667d6d736&';
-    const redirectUrl = 'https://zhibaoai.top/mp'; // 假设这是你的回调URL
+    const redirectUrl = 'https://zhibaoai.top/'; // 假设这是你的回调URL
     const state = '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     // 对redirectUrl进行URL编码
     const encodedRedirectUrl = encodeURIComponent(redirectUrl);
@@ -21,15 +21,15 @@ router.beforeEach(async (to, from, next) => {
     const store = useStore()
     console.log(to.query.referral)
     // authorize()
-    // getToken({ code: '081oZp000MYMJS1idt100Kha8t4oZp06', refererCode:'' }).then(res => {
-    //     localStorage.setItem('token', res.token)
-    //     localStorage.setItem('user', JSON.stringify(res.user))
-    //     var _url = window.location.protocol + '//' + window.location.host + '/'
-    //     window.history.pushState({}, 0, _url)
-    //     // store.GetChats(code)
-    //     return next()
-    // })
-    return next()
+    getToken({ code: '071rKv000nrsKS1Cfd0009E6m71rKv0i', refererCode:'' }).then(res => {
+        localStorage.setItem('token', res.token)
+        localStorage.setItem('user', JSON.stringify(res.user))
+        var _url = window.location.protocol + '//' + window.location.host + '/'
+        window.history.pushState({}, 0, _url)
+        // store.GetChats(code)
+        return next()
+    })
+    // return next()
     // return
     if(to.query.referral) {
         localStorage.setItem('referral', to.query.referral)
